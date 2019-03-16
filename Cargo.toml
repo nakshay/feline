@@ -1,0 +1,6 @@
+[package]
+name = "feline"
+version = "0.1.0"
+authors = ["Akshay Naik <inbox.akshaynaik@gmail.com>"]
+
+[dependencies]
