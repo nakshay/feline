@@ -1,2 +1,2 @@
 # feline
-Aiming to be fast and reliable (Redis-compatible) in-memory datastore 🐱
+Aiming to be fast and reliable (Redis-like) in-memory datastore 🐱
