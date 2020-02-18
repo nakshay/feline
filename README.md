@@ -1,7 +1,14 @@
 # feline
-Aiming to be fast and reliable (Redis-like) in-memory datastore 🐱
 
-[![Gitter](https://badges.gitter.im/feline-wg/community.svg)](https://gitter.im/feline-wg/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)  
+**Aiming to be fast and reliable (Redis-like) in-memory datastore 🐱**
+
+## Contributions
+
+- Fork the repo and star it :star:
+- Open issues :boom:
+- Raise PRs for issues :raised_hand:
+- Help on documentation :page_facing_up:
+- [![Gitter](https://badges.gitter.im/feline-wg/community.svg)](https://gitter.im/feline-wg/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)  
 
 
 ## License
