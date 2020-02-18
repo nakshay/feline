@@ -2,6 +2,10 @@
 
 **Aiming to be fast and reliable (Redis-like) in-memory datastore 🐱**
 
+The goal of this project will be to build redis-like, if possible (redis-compatible) in memory data store in *Rust programming lanaguage* . This will be a minimal version of Redis.
+
+The project is in initial phase and I am still looking for initial idea for bootstraping feline, if you are willing to get involved, refer contributions section.
+
 ## Contributions
 
 - Fork the repo and star it :star:
