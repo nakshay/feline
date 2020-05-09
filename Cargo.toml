@@ -3,5 +3,8 @@ name = "feline"
 version = "0.0.1"
 license = "MIT"
 authors = ["Akshay Naik <inbox.akshaynaik@gmail.com>"]
+edition = "2018"
 
 [dependencies]
+smol = { version = "0.1", features = ["tokio02"] }
+futures = "0.3.4"
