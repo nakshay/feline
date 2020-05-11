@@ -21,15 +21,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-use std::process;
-
-mod lib;
-use lib::start_server;
-
-fn main() {
-   if let Err(e) = start_server() {
-        eprintln!("Error occured while starting server {}",e);
-        process::exit(1);
-   }
-}
-
