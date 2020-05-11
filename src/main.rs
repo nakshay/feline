@@ -37,26 +37,23 @@ fn main() {
     let app = app::get_app();
     let config =  get_config(app);
     
-    println!("Value for config: {}", config);
-
-
-    if let Err(e) = server::start_server(config) {
+    if let Err(e) = server::start_server(&config) {
         eprintln!("Error occured while starting server {}", e);
         process::exit(1);
     }
 }
 
-fn get_config(app: App) -> &str { 
+fn get_config(app: App) -> String { 
     let matches = app.get_matches();
 
     match(matches.value_of("config")) {
+
         Some(config_file) => {
-            println!("Using config file {}",config_file);
-            config_file
+            String::from(config_file)
         },
         None => {
-            println!("No config file given using default config file feline.toml");
-            "feline.toml"
-        }
+            println!("No config file given using default config file");
+            String::from("feline.toml")
+        },
     }
 }
