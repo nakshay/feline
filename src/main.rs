@@ -23,19 +23,40 @@ SOFTWARE.
 
 use std::process;
 
+use clap::App;
+
 mod internal;
 mod cli;
 
 use internal::server;
 use cli::app;
 
+
 fn main() {
 
     let app = app::get_app();
-    app.get_matches();
+    let config =  get_config(app);
+    
+    println!("Value for config: {}", config);
 
-    if let Err(e) = server::start_server() {
+
+    if let Err(e) = server::start_server(config) {
         eprintln!("Error occured while starting server {}", e);
         process::exit(1);
+    }
+}
+
+fn get_config(app: App) -> &str { 
+    let matches = app.get_matches();
+
+    match(matches.value_of("config")) {
+        Some(config_file) => {
+            println!("Using config file {}",config_file);
+            config_file
+        },
+        None => {
+            println!("No config file given using default config file feline.toml");
+            "feline.toml"
+        }
     }
 }
