@@ -23,11 +23,12 @@ SOFTWARE.
 
 use std::process;
 
-mod lib;
-use lib::start_server;
+mod internal;
+
+use internal::server;
 
 fn main() {
-   if let Err(e) = start_server() {
+   if let Err(e) = server::start_server() {
         eprintln!("Error occured while starting server {}",e);
         process::exit(1);
    }

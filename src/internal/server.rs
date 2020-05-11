@@ -21,3 +21,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+use futures::io;
+use std::net::{TcpListener,TcpStream};
+use smol::{Async,Task}; 
+
+
+pub fn start_server() -> io::Result<()> {
+    smol::run(async {
+        
+        let listener = Async::<TcpListener>::bind("127.0.0.1:6380")?;
+        println!("feline started.... Listening on port {}", listener.get_ref().local_addr()?);
+        
+        loop {
+            let (stream,peer_addr) = listener.accept().await?;
+            println!("accepted connection from client {}", peer_addr);
+
+            Task::spawn(handle_connection(stream)).unwrap().detach();
+        };
+    })
+}
+
+async fn handle_connection(stream : Async<TcpStream>) -> io::Result<()> {
+    
+    io::copy(&stream, &mut &stream).await?;
+    Ok(())
+}
