@@ -25,7 +25,10 @@ use futures::io;
 use smol::{Async, Task};
 use std::net::{TcpListener, TcpStream};
 
-pub fn start_server() -> io::Result<()> {
+pub fn start_server(config : &str) -> io::Result<()> {
+
+    println!("Using config file {}",config);
+    
     smol::run(async {
         let listener = Async::<TcpListener>::bind("127.0.0.1:6380")?;
         println!(
