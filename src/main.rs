@@ -28,9 +28,8 @@ mod internal;
 use internal::server;
 
 fn main() {
-   if let Err(e) = server::start_server() {
-        eprintln!("Error occured while starting server {}",e);
+    if let Err(e) = server::start_server() {
+        eprintln!("Error occured while starting server {}", e);
         process::exit(1);
-   }
+    }
 }
-
