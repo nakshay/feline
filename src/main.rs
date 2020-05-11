@@ -24,10 +24,16 @@ SOFTWARE.
 use std::process;
 
 mod internal;
+mod cli;
 
 use internal::server;
+use cli::app;
 
 fn main() {
+
+    let app = app::get_app();
+    app.get_matches();
+
     if let Err(e) = server::start_server() {
         eprintln!("Error occured while starting server {}", e);
         process::exit(1);
