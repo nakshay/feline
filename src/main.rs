@@ -1,3 +1,5 @@
 mod lib;
 
-lib::start();
+fn main(){
+    lib::start();
+}
