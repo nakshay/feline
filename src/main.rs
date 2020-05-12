@@ -1,5 +1,4 @@
-mod lib;
 
 fn main(){
-    lib::start();
+    feline::start();
 }
