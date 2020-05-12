@@ -21,12 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+mod internal;
+mod cli;
+
 use std::process;
 
 use clap::App;
-
-mod internal;
-mod cli;
 
 use internal::server;
 use cli::app;
@@ -46,8 +46,7 @@ fn main() {
 fn get_config(app: App) -> String { 
     let matches = app.get_matches();
 
-    match(matches.value_of("config")) {
-
+    match matches.value_of("config") {
         Some(config_file) => {
             String::from(config_file)
         },

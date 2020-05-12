@@ -3,7 +3,7 @@ use clap::{crate_authors, crate_version, App, Arg};
 pub fn get_app<'a, 'b>() -> App<'a, 'b> {
     App::new("feline")
         .version(crate_version!())
-        .author(crate_authors!("\n"))
+        .author(crate_authors!())
         .about("Redis compatible in-memory datastore")
         .arg(
             Arg::with_name("config")
