@@ -1,4 +1,4 @@
-# feline
+![banner](banner.png)
 
 ![Build & Test](https://github.com/nakshay/feline/workflows/Build%20&%20Test/badge.svg?branch=master)   
 
