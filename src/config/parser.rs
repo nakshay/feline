@@ -7,7 +7,7 @@ of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+furnished to do so, subject to the folowing conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
@@ -21,32 +21,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-use futures::io;
-use smol::{Async, Task};
-use std::net::{TcpListener, TcpStream};
+pub fn parse_config<'a>(config_file: Option<&'a str>) -> Config<'a> {
+   
+    let mut log_file: Option<&str> = None;
+    let default_ip = "127.0.0.1";
+    let default_port = 6370;
+    // check if configration file present on disk
+    if let Some(config_file) = config_file {
+        // check if log file present in parsed configuration and add the log file in Config struct
+        //log_file = None; // change this when we will read configuration file
+    } else {
+        log_file = None;
+    }
 
-use crate::config::Config;
-
-pub fn start_server(config :&Config) -> io::Result<()> {
-    
-    let address =  format!("{}:{}",config.server_ip,config.server_port);
-
-    smol::run(async {
-        let listener = Async::<TcpListener>::bind(address)?;
-        println!(
-            "feline started.... Listening on port {}",
-            listener.get_ref().local_addr()?
-        );
-        loop {
-            let (stream, peer_addr) = listener.accept().await?;
-            println!("accepted connection from client {}", peer_addr);
-
-            Task::spawn(handle_connection(stream)).unwrap().detach();
-        }
-    })
+    // check if log file present in the config file
+    Config {
+        server_ip: default_ip,
+        server_port: default_port,
+        log_file ,
+    }
 }
 
-async fn handle_connection(stream: Async<TcpStream>) -> io::Result<()> {
-    io::copy(&stream, &mut &stream).await?;
-    Ok(())
+pub struct Config<'a> {
+    pub server_ip: &'a str,
+    pub server_port: u16,
+    pub log_file: Option<&'a str>,
 }
