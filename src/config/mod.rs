@@ -21,32 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-use futures::io;
-use smol::{Async, Task};
-use std::net::{TcpListener, TcpStream};
+mod parser;
+pub mod logger;
 
-use crate::config::Config;
-
-pub fn start_server(config :&Config) -> io::Result<()> {
-    
-    let address =  format!("{}:{}",config.server_ip,config.server_port);
-
-    smol::run(async {
-        let listener = Async::<TcpListener>::bind(address)?;
-        println!(
-            "feline started.... Listening on port {}",
-            listener.get_ref().local_addr()?
-        );
-        loop {
-            let (stream, peer_addr) = listener.accept().await?;
-            println!("accepted connection from client {}", peer_addr);
-
-            Task::spawn(handle_connection(stream)).unwrap().detach();
-        }
-    })
-}
-
-async fn handle_connection(stream: Async<TcpStream>) -> io::Result<()> {
-    io::copy(&stream, &mut &stream).await?;
-    Ok(())
-}
+pub use parser::parse_config;
+pub use parser::Config;

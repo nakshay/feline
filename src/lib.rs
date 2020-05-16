@@ -21,29 +21,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+mod config;
 mod internal;
 mod cli;
 
 use std::process;
+use std::path::Path;
 
 use clap::App;
+use log::{error};
 
 use internal::server;
 use cli::app;
-
+use config::Config;
+use config::logger;
 
 pub fn start() {
 
     let app = app::get_app();
-    let config =  get_config(app);
-    
+    let config_file =  get_config_file(app);
+    // if configuration file exist then pass configuration file else send None
+    let config:Config = if Path::new(&config_file).exists() {
+        config::parse_config(Some(&config_file))
+    } else {
+        println!("configuration file {} not found on disk ",&config_file);
+        config::parse_config(None)
+    };
+
+    if let Some(log_file) =  config.log_file {
+        logger::create_logger(Some(log_file));
+
+    } else {
+        logger::create_logger(None); 
+    }
+
     if let Err(e) = server::start_server(&config) {
-        eprintln!("Error occured while starting server {}", e);
+        error!("Error occured while starting server {}", e);
         process::exit(1);
     }
 }
 
-fn get_config(app: App) -> String { 
+// Read configuration flle from cli, if not present then use default configuratoin file i.e. feline.toml
+fn get_config_file(app: App) -> String { 
     let matches = app.get_matches();
 
     match matches.value_of("config") {
@@ -51,7 +70,7 @@ fn get_config(app: App) -> String {
             String::from(config_file)
         },
         None => {
-            println!("No config file given using default config file");
+            println!("No config file given using default config file, feline.toml");
             String::from("feline.toml")
         },
     }
