@@ -10,3 +10,5 @@ smol = { version = "0.1", features = ["tokio02"] }
 futures = "0.3.4"
 clap = "~2.27.0"
 log4rs = "0.12.0"
+log = "0.4"
+
